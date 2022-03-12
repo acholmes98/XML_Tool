@@ -20,7 +20,9 @@ public class HelloApplication extends Application {
         //excelTest.test();
 
         PointCreation xml_DIO2 = new PointCreation();
-        xml_DIO2.ReadDIO2_Excel("E:\\XML_Tool\\src\\main\\resources\\tools\\xml_tool\\DIO2 Template Layout.xlsx");
+        String XlsxPath = getClass().getResource("/tools/xml_tool/DIO2_Template_Layout.xlsx").toString().replace("file:/","");
+        System.out.println(XlsxPath);
+        xml_DIO2.ReadDIO2_Excel(XlsxPath);
 
     }
 
