@@ -1,16 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="tools.xml_tool.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tools.xml_tool.HelloController">
+    <children>
+      <MenuBar layoutY="-1.0" prefHeight="27.0" prefWidth="1280.0" style="-fx-background-color: #e5e5dc;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem fx:id="EditBeachMenuItem" mnemonicParsing="false" text="Toggle Beach Style" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem fx:id="MenuItemAbout" mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <SplitPane layoutX="167.0" layoutY="25.0" orientation="VERTICAL" prefHeight="478.0" prefWidth="770.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <items>
+          <AnchorPane fx:id="anchorPaneMain" minHeight="0.0" minWidth="0.0" prefHeight="515.0" prefWidth="1278.0" style="-fx-background-color: linear-gradient(to bottom, #959595 40%, #4B4B4B 100%);" SplitPane.resizableWithParent="false">
+               <children>
+                  <VBox alignment="CENTER" layoutX="60.0" layoutY="6.0" prefHeight="583.0" prefWidth="1198.0" spacing="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="6.0">
+                     <children>
+                        <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="1138.0" text="DYNAC XML Point Tool" textFill="#1a04a8">
+                           <font>
+                              <Font name="Bookman Old Style Bold" size="48.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1214.0" spacing="30.0">
+                           <children>
+                              <VBox prefHeight="90.0" prefWidth="326.0">
+                                 <children>
+                                    <Group fx:id="Help1">
+                                       <children>
+                                          <Circle fill="#0084ff" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+                                          <Label layoutX="-6.0" layoutY="-10.0" prefHeight="21.0" prefWidth="22.0" text="?" textFill="WHITE">
+                                             <font>
+                                                <Font name="Arial Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="400.0" />
+                                       </VBox.margin>
+                                    </Group>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="430.0" text="Excel Template Path">
+                                       <font>
+                                          <Font name="Bookman Old Style Bold" size="18.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <SplitPane dividerPositions="0.7967289719626168" prefHeight="160.0" prefWidth="430.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
+                                             <children>
+                                                <TextField fx:id="inputPathTxt" alignment="CENTER" editable="false" prefHeight="44.0" prefWidth="338.0" promptText="Input File Path" style="-fx-background-color: #e5e5dc;" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <Button fx:id="inputSelButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Arial Narrow" size="10.0" />
+                                                   </font>
+                                                   <effect>
+                                                      <DropShadow height="32.24" offsetX="5.0" offsetY="5.0" radius="14.2775" width="26.87">
+                                                         <color>
+                                                            <Color red="0.18421052396297455" green="0.18421052396297455" blue="0.18421052396297455" />
+                                                         </color>
+                                                      </DropShadow>
+                                                   </effect>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </SplitPane>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="160.0">
+                                 <children>
+                                    <Group fx:id="Help2">
+                                       <children>
+                                          <Circle fill="#0084ff" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+                                          <Label layoutX="-6.0" layoutY="-10.0" prefHeight="21.0" prefWidth="22.0" text="?" textFill="WHITE">
+                                             <font>
+                                                <Font name="Arial Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="130.0" />
+                                       </VBox.margin>
+                                    </Group>
+                                    <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="1138.0" text="Output Type">
+                                       <font>
+                                          <Font name="Bookman Old Style Bold" size="18.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets bottom="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <ComboBox fx:id="Combo1" prefHeight="38.0" prefWidth="150.0" promptText="Output Type" style="-fx-background-color: #e5e5dc;" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="90.0" prefWidth="326.0">
+                                 <children>
+                                    <Group fx:id="Help3">
+                                       <children>
+                                          <Circle fill="#0084ff" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+                                          <Label layoutX="-6.0" layoutY="-10.0" prefHeight="21.0" prefWidth="22.0" text="?" textFill="WHITE">
+                                             <font>
+                                                <Font name="Arial Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="400.0" />
+                                       </VBox.margin>
+                                    </Group>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="430.0" text="File Output Directory">
+                                       <font>
+                                          <Font name="Bookman Old Style Bold" size="18.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Label>
+                                    <SplitPane dividerPositions="0.7967289719626168" prefHeight="160.0" prefWidth="430.0">
+                                       <items>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
+                                             <children>
+                                                <TextField fx:id="outputDirTxt" alignment="CENTER" editable="false" prefHeight="44.0" prefWidth="338.0" promptText="File Output Directory" style="-fx-background-color: #e5e5dc;" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <Button fx:id="outputSelButton" mnemonicParsing="false" onMouseEntered="#myButtonMouseEnter" onMouseExited="#myButtonMouseExit" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Arial Narrow" size="10.0" />
+                                                   </font>
+                                                   <effect>
+                                                      <DropShadow height="32.24" offsetX="5.0" offsetY="5.0" radius="14.2775" width="26.87">
+                                                         <color>
+                                                            <Color red="0.18421052396297455" green="0.18421052396297455" blue="0.18421052396297455" />
+                                                         </color>
+                                                      </DropShadow>
+                                                   </effect>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                       </items>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </SplitPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="50.0" top="50.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Button id="myButton" fx:id="myButton" mnemonicParsing="false" onMouseEntered="#myButtonMouseEnter" onMouseExited="#myButtonMouseExit" prefHeight="89.0" prefWidth="212.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 30px;" text="Generate" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Narrow" size="18.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="32.24" offsetX="5.0" offsetY="5.0" radius="14.2775" width="26.87">
+                                 <color>
+                                    <Color red="0.18421052396297455" green="0.18421052396297455" blue="0.18421052396297455" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="30.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+    </children>
+</AnchorPane>

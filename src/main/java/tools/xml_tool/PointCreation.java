@@ -19,7 +19,7 @@ public class PointCreation {
     private void CreateDIO2_Points(String[] params, boolean isAppended) {
 
         String XML_Path = getClass().getResource("/tools/xml_tool/D2IO_Template.xml").toString().replace("file:/","");
-        System.out.println(XML_Path);
+        //System.out.println(XML_Path);
         SubXml_Temp( XML_Path,  params, isAppended);
 
     }
@@ -55,7 +55,7 @@ public class PointCreation {
                             params[i] = cell.getStringCellValue();
                             break;
                         case BLANK:
-                            System.out.println("blank");
+                            //System.out.println("blank");
                             isBlank = true;
 
                         default:
@@ -68,13 +68,13 @@ public class PointCreation {
                 }
                 if (k >= numHeaderRows && !isBlank) {
                     CreateDIO2_Points(params,isAppended);
-                    System.out.println("hit " + k);
+                    //System.out.println("hit " + k);
                 }
 
                 test_itr(params);
 
                 k++;
-                System.out.println(k);
+                //System.out.println(k);
             }
             wb.close();
         } catch (FileNotFoundException e) {
@@ -85,10 +85,10 @@ public class PointCreation {
     }
 
     private void test_itr(String[] params) {
-        System.out.println("");
-        System.out.print(params[0]);
+        //System.out.println("");
+        //System.out.print(params[0]);
         for (int j = 1; j < 12; j++) {
-            System.out.print("\t" + params[j]);
+            //System.out.print("\t" + params[j]);
         }
     }
 
@@ -101,7 +101,7 @@ public class PointCreation {
             fileWriter = new FileWriter(test,isAppended);
             bufferedWriter = new BufferedWriter(fileWriter);
             String line = null;
-            System.out.println(test + "\n");
+            //System.out.println(test + "\n");
 
                 while ((line = bufferedReader.readLine()) != null) {
                     //System.out.println("inside loop");
