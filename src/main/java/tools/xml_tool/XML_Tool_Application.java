@@ -6,14 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class HelloApplication extends Application {
+public class XML_Tool_Application extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
             primaryStage.setTitle("DYNAC XML Point Generation Tool");
-            Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Primary_View.fxml"));
             Scene scene = new Scene(root);
             //String css = this.getClass().getResource("application.css").toExternalForm();
             //scene.getStylesheets().add(css);

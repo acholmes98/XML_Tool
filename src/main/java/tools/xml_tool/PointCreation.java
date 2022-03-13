@@ -16,15 +16,15 @@ public class PointCreation {
     private BufferedWriter bufferedWriter;
 
 
-    private void CreateDIO2_Points(String[] params, boolean isAppended) {
+    private void CreateDIO2_Points(String[] params, String XmlOutPath, boolean isAppended) {
 
         String XML_Path = getClass().getResource("/tools/xml_tool/D2IO_Template.xml").toString().replace("file:/","");
         //System.out.println(XML_Path);
-        SubXml_Temp( XML_Path,  params, isAppended);
+        SubXml_Temp( XML_Path, XmlOutPath,  params, isAppended);
 
     }
 
-    public void ReadDIO2_Excel(String XlsPath) {
+    public void ReadDIO2_Excel(String XlsPath, String XmlOutPath) {
         String[] params = new String[15];
         try {
             File file = new File(XlsPath);   //creating a new file instance
@@ -35,7 +35,7 @@ public class PointCreation {
             Iterator<Row> itr = sheet.iterator();    //iterating over excel file
             boolean isAppended = false;
             int k = 0;
-            int numHeaderRows = 1;
+            int numHeaderRows = 2;
             while (itr.hasNext()) {
                 boolean isBlank = false;
 
@@ -66,12 +66,12 @@ public class PointCreation {
                 if (k > numHeaderRows) {
                     isAppended = true;
                 }
-                if (k >= numHeaderRows && !isBlank) {
-                    CreateDIO2_Points(params,isAppended);
+                if (k >= numHeaderRows) {
+                    CreateDIO2_Points(params,XmlOutPath,isAppended);
                     //System.out.println("hit " + k);
                 }
 
-                test_itr(params);
+                //test_itr(params);
 
                 k++;
                 //System.out.println(k);
@@ -92,13 +92,13 @@ public class PointCreation {
         }
     }
 
-    private void SubXml_Temp(String XmlInPath, String[] params, boolean isAppended) { // Substitutes values to XML D2IO template
+    private void SubXml_Temp(String XmlInPath, String XmlOutPath, String[] params, boolean isAppended) { // Substitutes values to XML D2IO template
 
         try {
             Xml_In_FR = new FileReader(XmlInPath);
             bufferedReader = new BufferedReader(Xml_In_FR);
-            String test = new File(XmlInPath).getParent() + "\\DIO2_Output.xml";
-            fileWriter = new FileWriter(test,isAppended);
+            String outputFilePath = XmlOutPath + "\\DIO2_Output.xml";
+            fileWriter = new FileWriter(outputFilePath,isAppended);
             bufferedWriter = new BufferedWriter(fileWriter);
             String line = null;
             //System.out.println(test + "\n");

@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tools.xml_tool.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tools.xml_tool.GUIController">
     <children>
       <MenuBar layoutY="-1.0" prefHeight="27.0" prefWidth="1280.0" style="-fx-background-color: #e5e5dc;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
@@ -85,12 +85,12 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
                                              <children>
-                                                <TextField fx:id="inputPathTxt" alignment="CENTER" editable="false" prefHeight="44.0" prefWidth="338.0" promptText="Input File Path" style="-fx-background-color: #e5e5dc;" />
+                                                <TextField fx:id="inputPathTxt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="Input File Path" style="-fx-background-color: #e5e5dc;" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                <Button fx:id="inputSelButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
+                                                <Button fx:id="inputSelButton" focusTraversable="false" mnemonicParsing="false" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
                                                    <font>
                                                       <Font name="Arial Narrow" size="10.0" />
                                                    </font>
@@ -167,12 +167,12 @@
                                        <items>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
                                              <children>
-                                                <TextField fx:id="outputDirTxt" alignment="CENTER" editable="false" prefHeight="44.0" prefWidth="338.0" promptText="File Output Directory" style="-fx-background-color: #e5e5dc;" />
+                                                <TextField fx:id="outputDirTxt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="File Output Directory" style="-fx-background-color: #e5e5dc;" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                <Button fx:id="outputSelButton" mnemonicParsing="false" onMouseEntered="#myButtonMouseEnter" onMouseExited="#myButtonMouseExit" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
+                                                <Button fx:id="outputSelButton" focusTraversable="false" mnemonicParsing="false" prefHeight="44.0" prefWidth="83.0" style="-fx-background-color: linear-gradient(to right, #0900FF 20%, #2F77BD 95%); -fx-font-size: 20px;" text="Select" textFill="WHITE">
                                                    <font>
                                                       <Font name="Arial Narrow" size="10.0" />
                                                    </font>

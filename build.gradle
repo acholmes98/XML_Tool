@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'tools.xml_tool'
-    mainClass = 'tools.xml_tool.HelloApplication'
+    mainClass = 'tools.xml_tool.XML_Tool_Application'
 }
 
 javafx {

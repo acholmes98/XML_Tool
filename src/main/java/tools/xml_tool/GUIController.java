@@ -11,12 +11,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class GUIController implements Initializable {
 
     // FXML annotations
     @FXML
@@ -50,7 +51,9 @@ public class HelloController implements Initializable {
     private String inputSelButtonStyle;
     private String outputSelButtonStyle;
     private boolean BeachStyleToggle = false;
-    private String initialDir = "C:\\";
+    private String out_InitialDir = "C:\\";
+    private String in_InitialDir = "C:\\";
+    private String in_InitialPath = in_InitialDir;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -117,11 +120,8 @@ public class HelloController implements Initializable {
     }
 
     private void myButtonClick() {
-        System.out.println("Button Clicked");
         PointCreation xml_DIO2 = new PointCreation();
-        String XlsxPath = getClass().getResource("/tools/xml_tool/DIO2_Template_Layout.xlsx").toString().replace("file:/","");
-        //System.out.println(XlsxPath);
-        xml_DIO2.ReadDIO2_Excel(XlsxPath);
+        xml_DIO2.ReadDIO2_Excel(in_InitialPath, out_InitialDir);
     }
 
     @FXML
@@ -135,35 +135,48 @@ public class HelloController implements Initializable {
     }
 
     private void inputButtonClick() {
-
+        try {
+            FileChooser FileChooser = new FileChooser();
+            FileChooser.setTitle("Select Input XLSX File");
+            FileChooser.setInitialDirectory(new File(in_InitialDir));
+            File file = FileChooser.showOpenDialog(inputSelButton.getScene().getWindow());
+            if(file.getPath() != null) {
+                in_InitialPath = file.getPath();
+                in_InitialDir = file.getParent();
+                inputPathTxt.setText(file.getPath());
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
     }
-
     void inputButtonMouseEnter() {
         inputSelButton.setStyle("-fx-background-color: grey; -fx-font-size: 20px;");
     }
-
     void inputButtonMouseExit() {
         inputSelButton.setStyle(inputSelButtonStyle);
     }
 
     private void outputButtonClick() {
-
+        try {
+            DirectoryChooser FolderChooser = new DirectoryChooser();
+            FolderChooser.setTitle("Select Output Folder");
+            FolderChooser.setInitialDirectory(new File(out_InitialDir));
+            File file = FolderChooser.showDialog(outputSelButton.getScene().getWindow());
+            if(file.getPath() != null) {
+                out_InitialDir = file.getPath();
+                outputDirTxt.setText(file.getPath());
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
     }
-
     void outputButtonMouseEnter() {
         outputSelButton.setStyle("-fx-background-color: grey; -fx-font-size: 20px;");
     }
-
     void outputButtonMouseExit() {
         outputSelButton.setStyle(outputSelButtonStyle);
     }
 
 
-
-    private void chooseFolder() {
-        DirectoryChooser FolderChooser = new DirectoryChooser();
-        FolderChooser.setTitle("Select Output Folder");
-        FolderChooser.setInitialDirectory(new File(initialDir));
-    }
 
 }
