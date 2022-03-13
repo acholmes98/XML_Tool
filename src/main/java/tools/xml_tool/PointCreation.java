@@ -5,6 +5,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 
 
@@ -16,72 +20,104 @@ public class PointCreation {
     private BufferedWriter bufferedWriter;
 
 
-    private void CreateDIO2_Points(String[] params, String XmlOutPath, boolean isAppended) {
+    public void ReadExcelTemps(String XlsPath, String XmlOutPath, int template_num) { //reads excel templates and creates XML files
+        if (template_num != 0) {
+            String[] params = new String[15];
+            try {
+                File file = new File(XlsPath);   //creating a new file instance
+                FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
+                //creating Workbook instance that refers to .xlsx file
+                XSSFWorkbook wb = new XSSFWorkbook(fis);
+                XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
+                Iterator<Row> itr = sheet.iterator();    //iterating over excel file
+                boolean isAppended = false;
+                int k = 0;
+                int numHeaderRows = 2;
+                while (itr.hasNext()) {
+                    boolean isBlank = false;
 
-        String XML_Path = getClass().getResource("/tools/xml_tool/D2IO_Template.xml").toString().replace("file:/","");
-        //System.out.println(XML_Path);
-        SubXml_Temp( XML_Path, XmlOutPath,  params, isAppended);
+                    Row row = itr.next();
+                    Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
+                    int i = 0;
+                    while (cellIterator.hasNext()) {
+                        Cell cell = cellIterator.next();
+                        switch (cell.getCellType()) {
+                            case STRING:    //field that represents string cell type
+                                //System.out.print(cell.getStringCellValue() + "\t\t\t");
+                                params[i] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:    //field that represents number cell type
+                                cell.setCellType(CellType.STRING);
+                                //System.out.print(cell.getStringCellValue() + " num" + "\t\t\t");
+                                params[i] = cell.getStringCellValue();
+                                break;
 
+                            default:
+                        }
+                        i++;
+                    }
+
+                    if (k > numHeaderRows) {
+                        isAppended = true;
+                    }
+                    if (k >= numHeaderRows) {
+                        Create_Points(params, XmlOutPath, isAppended, template_num);
+                        //System.out.println("hit " + k);
+                    }
+
+                    for (int j = 0; j < params.length; j++) {
+                        params[j] = null;
+                    }
+
+                    k++;
+                }
+
+                wb.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            File src = new File(getClass().getResource("/tools/xml_tool/Excel_Template_Empty.xlsx").toString().replace("file:/",""));
+            File dest = new File(XmlOutPath + "/Excel_Template_Empty.xlsx");
+            InputStream is = null;
+            OutputStream os = null;
+            try {
+                is = new FileInputStream(src);
+                os = new FileOutputStream(dest); // buffer size 1K
+                byte[] buf = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = is.read(buf)) > 0) {
+                    os.write(buf, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    is.close();
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
     }
 
-    public void ReadDIO2_Excel(String XlsPath, String XmlOutPath) {
-        String[] params = new String[15];
-        try {
-            File file = new File(XlsPath);   //creating a new file instance
-            FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
-            //creating Workbook instance that refers to .xlsx file
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
-            Iterator<Row> itr = sheet.iterator();    //iterating over excel file
-            boolean isAppended = false;
-            int k = 0;
-            int numHeaderRows = 2;
-            while (itr.hasNext()) {
-                boolean isBlank = false;
 
-                Row row = itr.next();
-                Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
-                int i = 0;
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    switch (cell.getCellType()) {
-                        case STRING:    //field that represents string cell type
-                            //System.out.print(cell.getStringCellValue() + "\t\t\t");
-                            params[i] = cell.getStringCellValue();
-                            break;
-                        case NUMERIC:    //field that represents number cell type
-                            cell.setCellType(CellType.STRING);
-                            //System.out.print(cell.getStringCellValue() + " num" + "\t\t\t");
-                            params[i] = cell.getStringCellValue();
-                            break;
-                        case BLANK:
-                            //System.out.println("blank");
-                            isBlank = true;
+    private void Create_Points(String[] params, String XmlOutPath, boolean isAppended, int template_num) {
 
-                        default:
-                    }
-                    i++;
-                }
-
-                if (k > numHeaderRows) {
-                    isAppended = true;
-                }
-                if (k >= numHeaderRows) {
-                    CreateDIO2_Points(params,XmlOutPath,isAppended);
-                    //System.out.println("hit " + k);
-                }
-
-                //test_itr(params);
-
-                k++;
-                //System.out.println(k);
-            }
-            wb.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (template_num) {
+            case 1:
+                break;
         }
+
+        String XML_Path = getClass().getResource("/tools/xml_tool/Excel_Template.xml").toString().replace("file:/","");
+        //System.out.println(XML_Path);
+        SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num);
+
     }
 
     private void test_itr(String[] params) {
@@ -92,7 +128,7 @@ public class PointCreation {
         }
     }
 
-    private void SubXml_Temp(String XmlInPath, String XmlOutPath, String[] params, boolean isAppended) { // Substitutes values to XML D2IO template
+    private void SubXml_Temp(String XmlInPath, String XmlOutPath, String[] params, boolean isAppended,int template_num) { // Substitutes values to XML D2IO template
 
         try {
             Xml_In_FR = new FileReader(XmlInPath);
@@ -102,10 +138,9 @@ public class PointCreation {
             bufferedWriter = new BufferedWriter(fileWriter);
             String line = null;
             //System.out.println(test + "\n");
+            String[] params_Temp = chooseParams(template_num);
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    //System.out.println("inside loop");
-                    //System.out.println(line);
                     line = line.replace("XXPointNameXX", params[0]);
                     line = line.replace("XXDescrXX", params[1]);
                     line = line.replace("XXDigDevXX", params[2]);
@@ -141,6 +176,12 @@ public class PointCreation {
 
         }
 
+    }
+
+    private String[] chooseParams(int template_num) {
+        String[] Params_temp = null;
+
+        return Params_temp;
     }
 
 

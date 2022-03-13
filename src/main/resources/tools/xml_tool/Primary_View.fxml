@@ -85,7 +85,7 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
                                              <children>
-                                                <TextField fx:id="inputPathTxt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="Input File Path" style="-fx-background-color: #e5e5dc;" />
+                                                <TextField fx:id="inputPathTxt" alignment="CENTER" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="Input File Path" style="-fx-background-color: #e5e5dc;" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -167,7 +167,7 @@
                                        <items>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="380.0">
                                              <children>
-                                                <TextField fx:id="outputDirTxt" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="File Output Directory" style="-fx-background-color: #e5e5dc;" />
+                                                <TextField fx:id="outputDirTxt" alignment="CENTER" focusTraversable="false" prefHeight="44.0" prefWidth="338.0" promptText="File Output Directory" style="-fx-background-color: #e5e5dc;" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

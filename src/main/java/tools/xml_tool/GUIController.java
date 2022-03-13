@@ -54,6 +54,7 @@ public class GUIController implements Initializable {
     private String out_InitialDir = "C:\\";
     private String in_InitialDir = "C:\\";
     private String in_InitialPath = in_InitialDir;
+    private int template_num;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,6 +63,7 @@ public class GUIController implements Initializable {
                 "Create DIO (2-Bit)","Create AIO (Int)","Create AIO (Float)");
         Combo1.setItems(list1);
         Combo1.setEditable(false);
+        Combo1.setOnAction(event -> getTemplateNum());
 
         //Main Button
         myButton.setOnAction(event -> myButtonClick());
@@ -120,15 +122,14 @@ public class GUIController implements Initializable {
     }
 
     private void myButtonClick() {
-        PointCreation xml_DIO2 = new PointCreation();
-        xml_DIO2.ReadDIO2_Excel(in_InitialPath, out_InitialDir);
+        PointCreation xml_points = new PointCreation();
+        System.out.println(template_num);
+        xml_points.ReadExcelTemps(in_InitialPath, out_InitialDir,template_num);
     }
-
     @FXML
     void myButtonMouseEnter() {
         myButton.setStyle("-fx-background-color: grey; -fx-font-size: 30px;");
     }
-
     @FXML
     void myButtonMouseExit() {
         myButton.setStyle(myButtonStyle);
@@ -149,10 +150,10 @@ public class GUIController implements Initializable {
             //e.printStackTrace();
         }
     }
-    void inputButtonMouseEnter() {
+    private void inputButtonMouseEnter() {
         inputSelButton.setStyle("-fx-background-color: grey; -fx-font-size: 20px;");
     }
-    void inputButtonMouseExit() {
+    private void inputButtonMouseExit() {
         inputSelButton.setStyle(inputSelButtonStyle);
     }
 
@@ -173,10 +174,34 @@ public class GUIController implements Initializable {
     void outputButtonMouseEnter() {
         outputSelButton.setStyle("-fx-background-color: grey; -fx-font-size: 20px;");
     }
-    void outputButtonMouseExit() {
+    private void outputButtonMouseExit() {
         outputSelButton.setStyle(outputSelButtonStyle);
     }
 
-
-
+    private void getTemplateNum() {
+        String template_Str = (String) Combo1.getValue();
+        switch (template_Str) {
+            case "Empty Template":
+                template_num = 0;
+                break;
+            case "Create All":
+                template_num = 1;
+                break;
+            case "Create DIO (1-Bit)":
+                template_num = 2;
+                break;
+            case "Create DIO (2-Bit)":
+                template_num = 3;
+                break;
+            case "Create AIO (Int)":
+                template_num = 4;
+                break;
+            case "Create AIO (Float)":
+                template_num = 5;
+                break;
+            default:
+                template_num = -1;
+                break;
+        }
+    }
 }
