@@ -1,0 +1,40 @@
+<genericDriverDevice templateName="pointTemplates/Analog" scriptEnabled="true" scan-enabled="true" name="points/XXPointNameXX" description="XXDescrXX">
+    <commonProperties command-object-manager="DEFAULT">
+        <extendedPropertyValue name="intFactor">
+            <value xsi:type="java.lang.Float">0.0</value>
+        </extendedPropertyValue>
+        <extendedPropertyValue name="rocTime">
+            <value xsi:type="java.lang.Integer">0</value>
+        </extendedPropertyValue>
+        <extendedPropertyValue name="intTime">
+            <value xsi:type="java.lang.Integer">0</value>
+        </extendedPropertyValue>
+        <extendedPropertyValue name="value">
+            <value xsi:type="java.lang.Float">172.01465</value>
+        </extendedPropertyValue>
+        <propertyMetaData property="value">
+            <metaData name="maximumValue">
+                <value xsi:type="java.lang.Float">XXMaxValXX</value>
+            </metaData>
+            <metaData name="minimumValue">
+                <value xsi:type="java.lang.Float">XXMinValXX</value>
+            </metaData>
+            <metaData name="propertyProcessors">
+                <value xsi:type="propertyProcessors">
+                    <propertyProcessor xsi:type="deadBandPropertyProcessor" inputValueMin="XXDB_PctXX" inputValueMax="100.0" exceptionDeadBand="0.5"/>
+                    <propertyProcessor xsi:type="linearMinMaxPropertyProcessor" inputValueMin="XXLin_Scale_MinXX" inputValueMax="XXLin_Scale_MaxXX"/>
+                </value>
+            </metaData>
+            <metaData name="units">
+                <value xsi:type="java.lang.String">XXEUXX</value>
+            </metaData>
+        </propertyMetaData>
+    </commonProperties>
+    <driver xsi:type="genericDeviceDriver" controller="controllers/XXControllerXX">
+        <inputConfiguration property="value">
+            <value xsi:type="registerInputConfiguration">
+                <input register="XXInpWord1XX"/>
+            </value>
+        </inputConfiguration>
+    </driver>
+</genericDriverDevice>

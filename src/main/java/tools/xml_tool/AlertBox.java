@@ -17,7 +17,7 @@ public class AlertBox {
         //window.initModality(Modality.APPLICATION_MODAL); //Force user to use this window first
         window= new Stage();
         //window.setTitle(title);
-        double scale_pct = 0.20;
+        double scale_pct = 0.25;
         window.setWidth(1280*scale_pct);
         window.setHeight(800*scale_pct);
 

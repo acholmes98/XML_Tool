@@ -144,7 +144,13 @@ public class GUIController implements Initializable {
     private void myButtonClick() {
         PointCreation xml_points = new PointCreation();
         System.out.println(template_num);
-        xml_points.ReadExcelTemps(in_InitialPath, out_InitialDir,template_num);
+        if (template_num == 1) {
+            for (int i = 2; i <= 5; i++) {
+                xml_points.ReadExcelGenXML(in_InitialPath, out_InitialDir, i);
+            }
+        } else {
+            xml_points.ReadExcelGenXML(in_InitialPath, out_InitialDir,template_num);
+        }
     }
     @FXML
     void myButtonMouseEnter() {
@@ -160,6 +166,7 @@ public class GUIController implements Initializable {
             FileChooser FileChooser = new FileChooser();
             FileChooser.setTitle("Select Input XLSX File");
             FileChooser.setInitialDirectory(new File(in_InitialDir));
+            FileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Excel Spreadsheet","*.xlsx"));
             File file = FileChooser.showOpenDialog(inputSelButton.getScene().getWindow());
             if(file.getPath() != null) {
                 in_InitialPath = file.getPath();

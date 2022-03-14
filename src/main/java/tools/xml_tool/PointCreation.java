@@ -16,22 +16,20 @@ public class PointCreation {
     private BufferedWriter bufferedWriter;
 
 
-    public void ReadExcelTemps(String XlsPath, String XmlOutPath, int template_num) { //reads excel templates and creates XML files
-        if (template_num != 0 && template_num != -1) {
+    public void ReadExcelGenXML(String XlsPath, String XmlOutPath, int template_num) { //reads excel templates and creates XML files
+        if (template_num > 0) {
             String[] params = new String[15];
             try {
                 File file = new File(XlsPath);   //creating a new file instance
                 FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
                 //creating Workbook instance that refers to .xlsx file
                 XSSFWorkbook wb = new XSSFWorkbook(fis);
-                XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
+                XSSFSheet sheet = wb.getSheetAt(template_num-2);     //creating a Sheet object to retrieve object
                 Iterator<Row> itr = sheet.iterator();    //iterating over excel file
                 boolean isAppended = false;
                 int k = 0;
                 int numHeaderRows = 2;
-                while (itr.hasNext()) {
-                    boolean isBlank = false;
-
+                while (itr.hasNext()){
                     Row row = itr.next();
                     Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
                     int i = 0;
@@ -39,12 +37,10 @@ public class PointCreation {
                         Cell cell = cellIterator.next();
                         switch (cell.getCellType()) {
                             case STRING:    //field that represents string cell type
-                                //System.out.print(cell.getStringCellValue() + "\t\t\t");
                                 params[i] = cell.getStringCellValue();
                                 break;
                             case NUMERIC:    //field that represents number cell type
                                 cell.setCellType(CellType.STRING);
-                                //System.out.print(cell.getStringCellValue() + " num" + "\t\t\t");
                                 params[i] = cell.getStringCellValue();
                                 break;
 
@@ -58,7 +54,6 @@ public class PointCreation {
                     }
                     if (k >= numHeaderRows) {
                         Create_Points(params, XmlOutPath, isAppended, template_num);
-                        //System.out.println("hit " + k);
                     }
 
                     for (int j = 0; j < params.length; j++) {
@@ -124,7 +119,7 @@ public class PointCreation {
                 if(template_num ==3)
                     break;
             case 4:
-                template_res = "AIO_Int_Template.xml";
+                template_res = "AI_Int_Template.xml";
                 XML_Path = getClass().getResource("/tools/xml_tool/"+template_res).toString().replace("file:/","");
                 SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num,template_res);
                 if(template_num ==4)
@@ -140,9 +135,6 @@ public class PointCreation {
 
         }
 
-
-
-
     }
 
 
@@ -151,7 +143,7 @@ public class PointCreation {
         try {
             Xml_In_FR = new FileReader(XmlInPath);
             bufferedReader = new BufferedReader(Xml_In_FR);
-            String outputFilePath = XmlOutPath + "\\" + template_res;
+            String outputFilePath = (XmlOutPath + "\\" + template_res).replace("Template","Points");
             fileWriter = new FileWriter(outputFilePath,isAppended);
             bufferedWriter = new BufferedWriter(fileWriter);
             String line = null;
@@ -159,21 +151,13 @@ public class PointCreation {
             String[] params_Temp = chooseParams(template_num);
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    line = line.replace("XXPointNameXX", params[0]);
-                    line = line.replace("XXDescrXX", params[1]);
-                    line = line.replace("XXDigDevXX", params[2]);
-                    line = line.replace("XXControllerXX", params[3]);
-                    line = line.replace("XXInpWord1XX", params[4]);
-                    line = line.replace("XXInpBit1XX", params[5]);
-                    line = line.replace("XXInpWord2XX", params[6]);
-                    line = line.replace("XXInpBit2XX", params[7]);
-                    line = line.replace("XXOutWord1XX", params[8]);
-                    line = line.replace("XXOutBit1XX", params[9]);
-                    line = line.replace("XXOutWord2XX", params[10]);
-                    line = line.replace("XXOutBit2XX", params[11]);
+                    for (int i = 0; i <params_Temp.length ; i++) {
+                        if(params_Temp[i] != null) {
+                            line = line.replace(params_Temp[i], params[i]);
+                        }
+                    }
                     bufferedWriter.write(line);
                     bufferedWriter.newLine();
-
                 }
                 bufferedWriter.newLine();
 
@@ -197,8 +181,39 @@ public class PointCreation {
     }
 
     private String[] chooseParams(int template_num) {
-        String[] Params_temp = null;
+        String[] Params_temp = new String[15];
 
+        final String[] PARAMS_DIO = {"XXPointNameXX","XXDescrXX","XXDigDevXX","XXControllerXX","XXInpWord1XX", "XXInpBit1XX",
+                "XXOutWord1XX","XXOutBit1XX",};
+        final String[] PARAMS_DIO2 = {"XXPointNameXX","XXDescrXX","XXDigDevXX","XXControllerXX","XXInpWord1XX", "XXInpBit1XX","XXInpWord2XX",
+                "XXInpBit2XX","XXOutWord1XX","XXOutBit1XX","XXOutWord2XX","XXOutBit2XX"};
+        final String[] PARAMS_AI_INT = {"XXPointNameXX","XXDescrXX","XXMinValXX","XXMaxValXX","XXLin_Scale_MinXX","XXLin_Scale_MaxXX",
+                "XXDB_PctXX","XXEUXX","XXControllerXX","XXInpWord1XX"};
+        final String[] PARAMS_AI_FLOAT = {"XXPointNameXX","XXDescrXX","XXMinValXX","XXMaxValXX","XXLin_Scale_MinXX","XXLin_Scale_MaxXX",
+                "XXDB_PctXX","XXEUXX","XXControllerXX","XXInpWord1XX","XXInpWord2XX","XXOutWord1XX","XXOutWord2XX"};
+
+        String[] temp = null;
+        switch (template_num) {
+            case 2:
+                temp = PARAMS_DIO;
+                break;
+            case 3:
+                temp = PARAMS_DIO2;
+                break;
+            case 4:
+                temp = PARAMS_AI_INT;
+                break;
+                case 5:
+                temp = PARAMS_AI_FLOAT;
+                break;
+            default:
+                System.out.println("Default hit in chooseParams switch statement");
+                break;
+        }
+
+        for (int i = 0; i <temp.length ; i++) {
+            Params_temp[i] = temp[i];
+        }//insures String[15] with null Strings after last template String
         return Params_temp;
     }
 

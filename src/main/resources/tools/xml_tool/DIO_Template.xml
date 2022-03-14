@@ -1,10 +1,10 @@
-<genericDriverDevice templateName="pointTemplates/Digital" scriptEnabled="true" scan-enabled="true" name= "points/XXPointNameXX" description= "XXDescrXX">
+<genericDriverDevice templateName="pointTemplates/Digital" scriptEnabled="true" scan-enabled="true" name="points/XXPointNameXX" description="XXDescriptXX">
     <commonProperties command-object-manager="DEFAULT">
         <extendedPropertyValue name="logEnable">
             <value xsi:type="java.lang.Boolean">true</value>
         </extendedPropertyValue>
         <extendedPropertyValue name="state">
-            <value xsi:type="java.lang.String">STOP</value>
+            <value xsi:type="java.lang.String">NORMAL</value>
         </extendedPropertyValue>
         <extendedPropertyValue name="countTime">
             <value xsi:type="java.lang.Integer">0</value>
@@ -19,12 +19,10 @@
         <inputConfiguration property="state">
             <value xsi:type="registerInputConfiguration">
                 <input register="XXInpWord1XX" bit="XXInpBit1XX"/>
-                <input register="XXInpWord2XX" bit="XXInpBit2XX"/>
             </value>
         </inputConfiguration>
         <commandConfiguration xsi:type="registerCommandConfiguration" commandName="writeRegisterValue" userSuppliedCommandName="Command" pulseEnabled="false" pulseTimeInterval="3000">
             <output register="XXOutWord1XX" bit="XXOutBit1XX"/>
-            <output register="XXOutWord2XX" bit="XXOutBit2XX"/>
             <commandArgument name="Command" propertyName="state">
                 <renderInfo xsi:type="listRenderInfo" defaultValue="false" renderType="ComboBox">
                 </renderInfo>
