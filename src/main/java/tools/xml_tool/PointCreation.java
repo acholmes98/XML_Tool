@@ -5,10 +5,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Iterator;
 
 
@@ -21,7 +17,7 @@ public class PointCreation {
 
 
     public void ReadExcelTemps(String XlsPath, String XmlOutPath, int template_num) { //reads excel templates and creates XML files
-        if (template_num != 0) {
+        if (template_num != 0 && template_num != -1) {
             String[] params = new String[15];
             try {
                 File file = new File(XlsPath);   //creating a new file instance
@@ -78,8 +74,8 @@ public class PointCreation {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            File src = new File(getClass().getResource("/tools/xml_tool/Excel_Template_Empty.xlsx").toString().replace("file:/",""));
+        } else if (template_num == 0) {
+            File src = new File(getClass().getResource("/tools/xml_tool/Excel_Template_Empty.xlsx").toString().replace("file:/", ""));
             File dest = new File(XmlOutPath + "/Excel_Template_Empty.xlsx");
             InputStream is = null;
             OutputStream os = null;
@@ -103,37 +99,59 @@ public class PointCreation {
 
             }
 
+        } else {
+            //Generate button pressed with no selection, do nothing
         }
     }
 
 
     private void Create_Points(String[] params, String XmlOutPath, boolean isAppended, int template_num) {
-
+        String template_res;
+        String XML_Path;
         switch (template_num) {
             case 1:
+
+            case 2:
+                template_res = "DIO_Template.xml";
+                XML_Path = getClass().getResource("/tools/xml_tool/"+template_res).toString().replace("file:/","");
+                SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num,template_res);
+                if(template_num ==2)
+                    break;
+            case 3:
+                template_res = "DIO2_Template.xml";
+                XML_Path = getClass().getResource("/tools/xml_tool/"+template_res).toString().replace("file:/","");
+                SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num,template_res);
+                if(template_num ==3)
+                    break;
+            case 4:
+                template_res = "AIO_Int_Template.xml";
+                XML_Path = getClass().getResource("/tools/xml_tool/"+template_res).toString().replace("file:/","");
+                SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num,template_res);
+                if(template_num ==4)
+                    break;
+            case 5:
+                template_res = "AIO_Float_Template.xml";
+                XML_Path = getClass().getResource("/tools/xml_tool/"+template_res).toString().replace("file:/","");
+                SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num,template_res);
+                if(template_num ==5)
+                    break;
+            default:
                 break;
+
         }
 
-        String XML_Path = getClass().getResource("/tools/xml_tool/Excel_Template.xml").toString().replace("file:/","");
-        //System.out.println(XML_Path);
-        SubXml_Temp( XML_Path, XmlOutPath, params, isAppended,template_num);
+
+
 
     }
 
-    private void test_itr(String[] params) {
-        //System.out.println("");
-        //System.out.print(params[0]);
-        for (int j = 1; j < 12; j++) {
-            //System.out.print("\t" + params[j]);
-        }
-    }
 
-    private void SubXml_Temp(String XmlInPath, String XmlOutPath, String[] params, boolean isAppended,int template_num) { // Substitutes values to XML D2IO template
+    private void SubXml_Temp(String XmlInPath, String XmlOutPath, String[] params, boolean isAppended,int template_num,String template_res) { // Substitutes values to XML D2IO template
 
         try {
             Xml_In_FR = new FileReader(XmlInPath);
             bufferedReader = new BufferedReader(Xml_In_FR);
-            String outputFilePath = XmlOutPath + "\\DIO2_Output.xml";
+            String outputFilePath = XmlOutPath + "\\" + template_res;
             fileWriter = new FileWriter(outputFilePath,isAppended);
             bufferedWriter = new BufferedWriter(fileWriter);
             String line = null;

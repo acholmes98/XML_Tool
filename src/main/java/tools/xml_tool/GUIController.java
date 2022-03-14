@@ -15,6 +15,9 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class GUIController implements Initializable {
@@ -74,17 +77,34 @@ public class GUIController implements Initializable {
         inputSelButton.setOnAction(event -> inputButtonClick());
         inputSelButton.setOnMouseEntered(event -> inputButtonMouseEnter());
         inputSelButton.setOnMouseExited(event -> inputButtonMouseExit());
+        inputPathTxt.setOnAction(event ->{
+            Path path = Paths.get(inputPathTxt.getText());
+            if(Files.exists(path)) {
+                in_InitialPath = inputPathTxt.getText();
+            } else {
+                inputPathTxt.setText(in_InitialPath);
+            }
 
+        });
+        
         //output file selection button
         outputSelButton.setOnAction(event -> outputButtonClick());
         outputSelButton.setOnMouseEntered(event -> outputButtonMouseEnter());
         outputSelButton.setOnMouseExited(event -> outputButtonMouseExit());
+        outputDirTxt.setOnAction(event ->{
+            Path path = Paths.get(outputDirTxt.getText());
+            if (Files.exists(path)) {
+                out_InitialDir = outputDirTxt.getText();
+            } else {
+                outputDirTxt.setText(out_InitialDir);
+            }
+        });
 
         //Help Pop-ups
         AlertBox helpPopup = new AlertBox();
         Help1.setOnMouseEntered(event -> helpPopup.display("Excel Template Selection Help", "Select the Excel template containing DYNAC" +
                 " point information. If you do not have the template, select \"Empty Template\" from the combo box to the right, set " +
-                "the Output Directory, click the \"Generate\" button, and fill in the resulting template.",event.getScreenX()+30,event.getScreenY()-110));
+                "the Output Directory, click the \"Generate\" button, and fill in the resulting template.\nIf manually entering a directory to the text box, press enter after typing text.",event.getScreenX()+30,event.getScreenY()-110));
         Help1.setOnMouseExited(event -> helpPopup.close());
 
         Help2.setOnMouseEntered(event -> helpPopup.display("Output Type Help", "Select from the drop down menu the type of points" +
@@ -92,8 +112,8 @@ public class GUIController implements Initializable {
                 "If you need a fresh template to fill out, select \"Empty Template\".",event.getScreenX()+30,event.getScreenY()-110));
         Help2.setOnMouseExited(event -> helpPopup.close());
 
-        Help3.setOnMouseEntered(event -> helpPopup.display("Output Directory Help", "Select the directory in which you would like the tool" +
-                "to place the XML files or empty Excel template.",event.getScreenX()+30,event.getScreenY()-110));
+        Help3.setOnMouseEntered(event -> helpPopup.display("Output Directory Help", "Select the directory in which you would like the tool " +
+                "to place the XML files or empty Excel template.\nIf manually entering a directory to the text box, press enter after typing text.",event.getScreenX()+30,event.getScreenY()-110));
         Help3.setOnMouseExited(event -> helpPopup.close());
 
 
