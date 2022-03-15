@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -47,6 +48,8 @@ public class GUIController implements Initializable {
     private AnchorPane anchorPaneMain;
     @FXML
     private MenuItem EditBeachMenuItem;
+    @FXML
+    private MenuItem CloseMenuItem;
 
 
 
@@ -57,7 +60,10 @@ public class GUIController implements Initializable {
     private String out_InitialDir = "C:\\";
     private String in_InitialDir = "C:\\";
     private String in_InitialPath = in_InitialDir;
-    private int template_num;
+    private int template_num = -1;
+    private boolean filledOutputDir = false;
+    private boolean filledInputDir = false;
+    GenericPopup_SingleMsg genericPopupSingleMsg = new GenericPopup_SingleMsg();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,7 +75,21 @@ public class GUIController implements Initializable {
         Combo1.setOnAction(event -> getTemplateNum());
 
         //Main Button
-        myButton.setOnAction(event -> myButtonClick());
+        myButton.setOnAction(event -> {
+            if (filledOutputDir && (template_num>0 || filledInputDir)) {
+                myButtonClick();
+                genericPopupSingleMsg.CreatePopup("Output generated successfully!","Files Generated");
+
+            } else if (!filledOutputDir) {
+                genericPopupSingleMsg.CreatePopup("Designate the output directory by clicking the select " +
+                        "button on the right side and then choosing a valid directory.","Designate Output Directory");
+            } else {
+                genericPopupSingleMsg.CreatePopup("Designate the input file by clicking the select " +
+                        "button on the left side and then choosing a valid Excel template file. If you do not have a " +
+                        "template, select \"Empty Template\" from the drop down (for this, you do not need to specify a file).",
+                        "Designate Input File");
+            }
+        });
         myButton.setOnMouseEntered(event -> myButtonMouseEnter());
         myButton.setOnMouseExited(event -> myButtonMouseExit());
 
@@ -81,6 +101,7 @@ public class GUIController implements Initializable {
             Path path = Paths.get(inputPathTxt.getText());
             if(Files.exists(path)) {
                 in_InitialPath = inputPathTxt.getText();
+                filledInputDir = true;
             } else {
                 inputPathTxt.setText(in_InitialPath);
             }
@@ -88,13 +109,17 @@ public class GUIController implements Initializable {
         });
         
         //output file selection button
-        outputSelButton.setOnAction(event -> outputButtonClick());
+        outputSelButton.setOnAction(event ->{
+            outputButtonClick();
+            filledOutputDir = true;
+        });
         outputSelButton.setOnMouseEntered(event -> outputButtonMouseEnter());
         outputSelButton.setOnMouseExited(event -> outputButtonMouseExit());
         outputDirTxt.setOnAction(event ->{
             Path path = Paths.get(outputDirTxt.getText());
             if (Files.exists(path)) {
                 out_InitialDir = outputDirTxt.getText();
+                filledOutputDir = true;
             } else {
                 outputDirTxt.setText(out_InitialDir);
             }
@@ -121,6 +146,8 @@ public class GUIController implements Initializable {
             AboutPopupWindow aboutWindow = new AboutPopupWindow();
             aboutWindow.CreateAboutPopup();
         });
+
+        CloseMenuItem.setOnAction(event -> ((Stage)inputSelButton.getScene().getWindow()).close());
 
 
         EditBeachMenuItem.setOnAction(event -> {
@@ -172,6 +199,7 @@ public class GUIController implements Initializable {
                 in_InitialPath = file.getPath();
                 in_InitialDir = file.getParent();
                 inputPathTxt.setText(file.getPath());
+                filledInputDir = true;
             }
         } catch (Exception e) {
             //e.printStackTrace();

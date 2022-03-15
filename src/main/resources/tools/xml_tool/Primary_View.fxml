@@ -24,7 +24,7 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="CloseMenuItem" mnemonicParsing="false" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">

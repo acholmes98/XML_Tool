@@ -9,16 +9,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AboutPopupWindow {
+public class GenericPopup_SingleMsg {
     Stage stage;
 
 
-    public void CreateAboutPopup() {
+    public void CreatePopup(String message,String title) {
         Label label = new Label();
-        String message =  "DYNAC XML Tool\nVersion 0.4\n\nCreated by: Andrew Holmes\n\n\n\nTetra Tech\nIBRA-RMAC";
         label.setText(message);
         label.setWrapText(true);
-        label.setAlignment(Pos.TOP_CENTER);
+        label.setAlignment(Pos.TOP_LEFT);
         label.setStyle("-fx-font-size: 14");
 
         Button OK_Button = new Button("OK");
@@ -26,7 +25,7 @@ public class AboutPopupWindow {
         OK_Button.setAlignment(Pos.CENTER);
         OK_Button.setPrefSize(90,30);
 
-        VBox layout = new VBox(50);
+        VBox layout = new VBox(55);
         layout.setPadding(new Insets(15,10,15,10));
         layout.getChildren().addAll(label,OK_Button);
         layout.setAlignment(Pos.TOP_CENTER);
@@ -34,12 +33,13 @@ public class AboutPopupWindow {
         Scene scene = new Scene(layout);
         stage = new Stage();
         stage.setScene(scene);
-        double scale_pct = 0.4;
-        stage.setWidth(800*scale_pct);
-        stage.setHeight(900*scale_pct);
+        double scale_pct = 0.32;
+        stage.setWidth(1280*scale_pct);
+        stage.setHeight(800*scale_pct);
+        stage.setTitle(title);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("About");
         stage.showAndWait();
+
 
 
     }

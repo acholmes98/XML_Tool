@@ -153,7 +153,11 @@ public class PointCreation {
                 while ((line = bufferedReader.readLine()) != null) {
                     for (int i = 0; i <params_Temp.length ; i++) {
                         if(params_Temp[i] != null) {
-                            line = line.replace(params_Temp[i], params[i]);
+                            if (params[i] != null) {
+                                line = line.replace(params_Temp[i], params[i]);
+                            } else {
+                                line = line.replace(params_Temp[i],"");
+                            }
                         }
                     }
                     bufferedWriter.write(line);
