@@ -58,7 +58,11 @@ jlink {
     launcher {
         name = 'DYNAC Point Generation Tool'
     }
+    jpackage {
+        imageOptions = ["--icon", "src/main/resources/tools/xml_tool/DYNAC Point Generation Tool.ico"]
+    }
 }
+
 
 jlinkZip {
     group = 'distribution'

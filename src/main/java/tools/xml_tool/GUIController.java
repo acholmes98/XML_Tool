@@ -60,7 +60,7 @@ public class GUIController implements Initializable {
     private String out_InitialDir = "C:\\";
     private String in_InitialDir = "C:\\";
     private String in_InitialPath = in_InitialDir;
-    private int template_num = -1;
+    private int template_num = 0;
     private boolean filledOutputDir = false;
     private boolean filledInputDir = false;
     GenericPopup_SingleMsg genericPopupSingleMsg = new GenericPopup_SingleMsg();
@@ -76,7 +76,7 @@ public class GUIController implements Initializable {
 
         //Main Button
         myButton.setOnAction(event -> {
-            if (filledOutputDir && (template_num>0 || filledInputDir)) {
+            if (filledOutputDir && (template_num==0 || filledInputDir)) {
                 myButtonClick();
                 genericPopupSingleMsg.CreatePopup("Output generated successfully!","Files Generated");
 
